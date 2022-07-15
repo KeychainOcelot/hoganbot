@@ -7,7 +7,7 @@ client.on("ready", () => {
 })
 
 client.on("message", msg => {
-    if(msg.content === "hogan pls" || msg.content === "job") {
+    if (msg.content === "hogan pls" || msg.content === "job") {
         msg.reply("That doesn't work for me, brother");
     }
     else if (msg.content === "jabroni") {
@@ -15,6 +15,15 @@ client.on("message", msg => {
     }
     else if (msg.content === "worked shoot") {
         msg.reply("That Ram Iyer is a jabroni mark, brother");
+    }
+    else if (msg.content === "brother") {
+        msg.reply("brother...");
+    }
+    else if (msg.content === "championship") {
+        msg.reply("Look at these 36-inch pythons, brother");
+    }
+    else if (msg.content === "ooh yeah") {
+        msg.reply("Don't talk to me about that mark Macho Man Randy Savage, brother");
     }
 })
 
