@@ -1,24 +1,21 @@
+//Dependencies
 const { Client, Intents } = require('discord.js');
-const Discord = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const readline = require("readline");
 const fs = require("fs");
-const { allowedNodeEnvironmentFlags } = require('process');
 const config = require('./config.json')
 
-// const file = readline.createInterface({
-//     input: fs.createReadStream('quotes.txt'),
-//     output: process.stdout,
-//     terminal: false
-// })
-
-let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
+//Trigger words for the bot
 const triggerWords = ['hogan pls', 'job'];
 
+//Bot responses
+let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
+
+//Bot ready
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
 
+//Bot main logic
 client.on("message", msg => {
     if(msg.author.bot) return false;
 
@@ -31,11 +28,7 @@ client.on("message", msg => {
             }
         }
     });
-
-    // if (msg.content === "hogan pls") {
-        
-    // } else if(msg.content === "job") {
-    // }
 });
 
+//Bot config token
 client.login(config.token)
