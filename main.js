@@ -5,10 +5,11 @@ const fs = require("fs");
 const config = require('./config.json')
 
 //Trigger words for the bot
-const triggerWords = ['hogan pls', 'job'];
+const triggerWords = ['hogan pls', 'job', 'hogan gif'];
 
 //Bot responses
 let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
+let gifs = fs.readFileSync('gifs.txt').toString().split("\n");
 
 //Bot ready
 client.on("ready", () => {
@@ -25,6 +26,8 @@ client.on("message", msg => {
                 msg.reply(quotes[Math.floor(Math.random() * quotes.length)] + ', brother');
             } else if(word === 'job') {
                 msg.reply("That doesn't work for me, brother.");
+            } else if(word === 'hogan gif') {
+                msg.reply(gifs[Math.floor(Math.random() * gifs.length)]);
             }
         }
     });
