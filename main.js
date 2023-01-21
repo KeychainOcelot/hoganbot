@@ -5,7 +5,7 @@ const fs = require("fs");
 const config = require('./config.json')
 
 //Trigger words for the bot
-const triggerWords = ['hogan pls', 'job', 'hogan gif'];
+const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
 
 //Bot responses
 let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
@@ -28,6 +28,8 @@ client.on("message", msg => {
                 msg.reply("That doesn't work for me, brother.");
             } else if(word === 'hogan gif') {
                 msg.reply(gifs[Math.floor(Math.random() * gifs.length)]);
+            } else if(word === 'brother') {
+                msg.reply('...brother.');
             }
         }
     });
