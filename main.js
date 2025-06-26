@@ -3,7 +3,7 @@ import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { REST, Routes } from 'discord.js';
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 import * as fs from 'node:fs';
-import * as config from './config.json';
+import * as config from './config.json' with { type: "json" };
 
 //Trigger words for the bot
 const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
