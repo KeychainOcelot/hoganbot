@@ -1,9 +1,8 @@
 //Dependencies
-import { Client, Events, GatewayIntentBits } from 'discord.js';
-import { REST, Routes } from 'discord.js';
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
-import * as fs from 'node:fs';
-import * as config from './config.json' with { type: "json" };
+
+const { Client, GatewayIntentBits } = require('discord.js');
+const fs = require('fs');
+require('dotenv').config();
 
 //Trigger words for the bot
 const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
@@ -12,60 +11,35 @@ const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
 let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
 let gifs = fs.readFileSync('gifs.txt').toString().split("\n");
 
-//Slash commands
-const commands = [
-  {
-    name: 'brother',
-    description: 'You get tales of my escapades, brother',
-  },
-];
+//Bot client Instance
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
+});
 
-const rest = new REST({ version: '10' }).setToken(config.token);
+//Bot going live
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}.`);
+});
 
-try {
-  console.log('Started refreshing application (/) commands.');
+//Event listening
+client.on('messageCreate', message => {
+  if (message.author.bot) return;
 
-  await rest.put(Routes.applicationCommands(Client), { body: commands });
+  const messageContent = message.content.toLowerCase();
 
-  console.log('Successfully reloaded application (/) commands.');
-} catch (error) {
-  console.error(error);
-}
+  for (const [trigger,] of triggerWords.entries()) {
+    if (messageContent.includes(trigger)) {
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-//Bot ready
-client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`)
-})
-
-//New attempt at bot logic (circa 2025)
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-
-  if (interaction.commandName === 'brother') {
-    await interaction.reply(quotes[Math.floor(Math.random() * quotes.length)] + ', brother');
+      message.reply(quote);
+      return;
+    }
   }
-})
+});
 
-
-
-//Bot main logic
-//client.on("message", msg => {
-//  if (msg.author.bot) return false;
-
-//  triggerWords.forEach((word) => {
-//    if (msg.content.includes(word)) {
-//      if (word === 'hogan pls') {
-//        msg.reply(quotes[Math.floor(Math.random() * quotes.length)] + ', brother');
-//      } else if (word === 'job') {
-//        msg.reply("That doesn't work for me, brother.");
-//      } else if (word === 'hogan gif') {
-//        msg.reply(gifs[Math.floor(Math.random() * gifs.length)]);
-//      } else if (word === 'brother') {
-//        msg.reply('...brother.');
-//      }
-//    }
-//  });
-//});
-
-//Bot config token
-client.login(config.token)
+//Bot token login
+client.login(process.env.DISCORD_TOKEN);
