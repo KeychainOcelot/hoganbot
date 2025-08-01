@@ -10,7 +10,7 @@ const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
 //Bot responses
 let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
 let gifs = fs.readFileSync('gifs.txt').toString().split("\n");
-const enders = ['... brother.', '... dude.', '... jack!', '... man.']
+const enders = [', brother.', ', dude!', ', jack!', ', man.']
 
 //Bot client Instance
 const client = new Client({
@@ -41,8 +41,9 @@ client.on('messageCreate', message => {
 				message.reply(gif);
 			} else {
 				const quote = quotes[Math.floor(Math.random() * quotes.length)];
+				const starter = enders[Math.floor(Math.random() * enders.length)];
 				const ender = enders[Math.floor(Math.random() * enders.length)];
-				message.reply(quote + ender);
+				message.reply("Well, let me tell you something" + starter + " " + quote + ender);
 			}
 
 			return;
