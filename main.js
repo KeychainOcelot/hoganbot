@@ -8,9 +8,20 @@ const { token } = require('./config.json');
 const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
 
 //Bot responses
-let quotes = fs.readFileSync('quotes.txt').toString().split("\n");
-let gifs = fs.readFileSync('gifs.txt').toString().split("\n");
+let quotes = [];
+let gifs = [];
 const enders = [', brother.', ', dude!', ', jack!', ', man.']
+
+try {
+    quotes = fs.readFileSync('quotes.txt', 'utf8').split('\n').filter(Boolean);
+} catch (err) {
+    console.error('Error reading quotes.txt:', err.message);
+}
+try {
+    gifs = fs.readFileSync('gifs.txt', 'utf8').split('\n').filter(Boolean);
+} catch (err) {
+    console.error('Error reading gifs.txt:', err.message);
+}
 
 //Bot client Instance
 const client = new Client({
