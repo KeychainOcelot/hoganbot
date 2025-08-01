@@ -31,7 +31,7 @@ client.on('messageCreate', message => {
 
 	const messageContent = message.content.toLowerCase();
 
-	for (const [trigger] of triggerWords.entries()) {
+	for (const [index, trigger] of triggerWords.entries()) {
 		if (messageContent.includes(trigger)) {
 			const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
