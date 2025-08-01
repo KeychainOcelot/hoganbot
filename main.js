@@ -32,13 +32,20 @@ client.on('messageCreate', message => {
 	const messageContent = message.content.toLowerCase();
 
 	for (const [index, trigger] of triggerWords.entries()) {
-		if (messageContent.includes(trigger)) {
-			const quote = quotes[Math.floor(Math.random() * quotes.length)];
-
-			message.reply(quote);
-			return;
-		}
-	}
+        if (messageContent.includes(trigger)) {
+            
+            // Send GIF for 'hogan gif' trigger, quotes for remaining triggers
+            if (trigger === 'hogan gif') {
+                const gif = gifs[Math.floor(Math.random() * gifs.length)];
+                message.reply(gif);
+            } else {
+                const quote = quotes[Math.floor(Math.random() * quotes.length)];
+                message.reply(quote);
+            }
+            
+            return;
+        }
+    }
 });
 
 //Bot token login
