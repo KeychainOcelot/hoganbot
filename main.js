@@ -2,7 +2,7 @@
 
 const { Client, GatewayIntentBits } = require('discord.js');
 const fs = require('fs');
-require('dotenv').config();
+const { token } = require('./config.json');
 
 //Trigger words for the bot
 const triggerWords = ['hogan pls', 'job', 'brother', 'hogan gif'];
@@ -13,33 +13,33 @@ let gifs = fs.readFileSync('gifs.txt').toString().split("\n");
 
 //Bot client Instance
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
-  ]
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	]
 });
 
 //Bot going live
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}.`);
+	console.log(`Logged in as ${client.user.tag}.`);
 });
 
 //Event listening
 client.on('messageCreate', message => {
-  if (message.author.bot) return;
+	if (message.author.bot) return;
 
-  const messageContent = message.content.toLowerCase();
+	const messageContent = message.content.toLowerCase();
 
-  for (const [trigger] of triggerWords.entries()) {
-    if (messageContent.includes(trigger)) {
-      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+	for (const [trigger] of triggerWords.entries()) {
+		if (messageContent.includes(trigger)) {
+			const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-      message.reply(quote);
-      return;
-    }
-  }
+			message.reply(quote);
+			return;
+		}
+	}
 });
 
 //Bot token login
-client.login(process.env.DISCORD_TOKEN);
+client.login(token);
